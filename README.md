@@ -44,6 +44,12 @@ $ make
 $ ./pdf-shrink
 ```
 
+## License
+
+MIT License.
+
+The ["download" button icon](https://openclipart.org/detail/218662/download-icon) is by [qubodup](https://openclipart.org/user-detail/qubodup).
+
 ## Development notes
 
 - Drag and drop:
