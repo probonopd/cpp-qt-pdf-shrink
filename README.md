@@ -50,6 +50,8 @@ MIT License.
 
 The ["download" button icon](https://openclipart.org/detail/218662/download-icon) is by [qubodup](https://openclipart.org/user-detail/qubodup).
 
+https://openclipart.org/detail/229880/hourglass
+
 ## Development notes
 
 - Drag and drop:
@@ -77,6 +79,5 @@ The ["download" button icon](https://openclipart.org/detail/218662/download-icon
 
 - Make sure that the ghostscript path is an executable.
 - Use a real dialog for the preferences, with a file picker.
-- Set the button to an hourglass while processing.
 - Add and check the install step. (The binary seems to work correctly even if moved to a random place)
 - 150 dpi for images could be enough (if we target home/office printers + screen)

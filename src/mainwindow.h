@@ -20,10 +20,13 @@ protected:
     void dropEvent(QDropEvent *event) override;
 private slots:
     void preferences();
+    void startProcessFile();
+    void finishProcessFile(int exitCode, QProcess::ExitStatus);
     void about();
 private:
 	QToolButton *runButton;
-
+    QLabel *statusLabel;
+    QAction *openAction;
 
 	QString settingsPath;
 	QString ghostscriptPath{};

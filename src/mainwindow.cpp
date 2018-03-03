@@ -21,28 +21,32 @@ MainWindow::MainWindow() :
 {
     this->setFixedSize(200, 400);
 
-	runButton = new QToolButton(this);
+    runButton = new QToolButton(this);
     QSize iconSize(200, 200);
     runButton->setIconSize(iconSize);
-	runButton->setIcon(QIcon(":download.png"));
-	runButton->setText("Process &File");
+    runButton->setIcon(QIcon(":download.png"));
+    runButton->setText("Process &File");
 
-	QPushButton *quitButton = new QPushButton("Quit");
+    statusLabel = new QLabel(this);
+    statusLabel->setText("Drop a file...");
+
+    QPushButton *quitButton = new QPushButton("Quit");
     connect(quitButton, SIGNAL (released()),this, SLOT(close()));
 
-	QVBoxLayout *layout = new QVBoxLayout;
-	layout->addWidget(runButton);
-	layout->addWidget(quitButton);
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(runButton);
+    layout->addWidget(statusLabel);
+    layout->addWidget(quitButton);
 
-	QWidget *window = new QWidget();
-	window->setLayout(layout);
+    QWidget *window = new QWidget();
+    window->setLayout(layout);
 
-	setCentralWidget(window);
+    setCentralWidget(window);
 
 
 
     setAcceptDrops(true);
-	loadSettings();
+    loadSettings();
 
     createActions();
 }
@@ -53,9 +57,9 @@ void MainWindow::createActions()
     QAction *exitAction = fileMenu->addAction(tr("E&xit"), this, &QWidget::close);
     exitAction->setShortcuts(QKeySequence::Quit);
 
-    QAction *openAction = fileMenu->addAction(tr("Process &File..."), this, &MainWindow::open);
-	runButton->setDefaultAction(openAction);
-	runButton->setIcon(QIcon(":download.png")); // setDefaultAction takes the icon from the action...
+    openAction = fileMenu->addAction(tr("Process &File..."), this, &MainWindow::open);
+    runButton->setDefaultAction(openAction);
+    runButton->setIcon(QIcon(":download.png")); // setDefaultAction takes the icon from the action...
 
     QAction *preferencesAct = fileMenu->addAction(tr("&Preferences"), this, &MainWindow::preferences);
     preferencesAct->setShortcuts(QKeySequence::Preferences);
@@ -67,8 +71,8 @@ void MainWindow::createActions()
 
 void MainWindow::loadSettings()
 {
-	QSettings settings(settingsPath, QSettings::NativeFormat);
-	ghostscriptPath = settings.value("path", "gs").toString();
+    QSettings settings(settingsPath, QSettings::NativeFormat);
+    ghostscriptPath = settings.value("path", "gs").toString();
 }
 
 void MainWindow::saveSettings()
@@ -80,17 +84,17 @@ void MainWindow::saveSettings()
 
 void MainWindow::open()
 {
-	QString processFilename = QFileDialog::getOpenFileName(this,
-		tr("Open file to be shrinked"),
-		"",
-		tr("Pdf files (*.pdf);;All Files (*)")
-	);
+    QString processFilename = QFileDialog::getOpenFileName(this,
+        tr("Open file to be shrinked"),
+        "",
+        tr("Pdf files (*.pdf);;All Files (*)")
+    );
 
-	if (processFilename.isEmpty()) {
-		return;
-	}
+    if (processFilename.isEmpty()) {
+        return;
+    }
 
-	processFile(processFilename);
+    processFile(processFilename);
 }
 
 /**
@@ -119,26 +123,55 @@ void MainWindow::processFile(QString inputfile)
 
         // qDebug() << command;
         process->start(command);
+        connect(process, SIGNAL(started()), this, SLOT(startProcessFile()));
+        connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(finishProcessFile(int, QProcess::ExitStatus)));
+        connect(process, SIGNAL(finished(int)), process, SLOT(deleteLater()));
+        /*
         if (!process->waitForFinished()) {
             process->close();
             // qDebug() << "failed";
         }
+        */
+
         // qDebug() << process->readAllStandardError();
         // qDebug() << "success";
+}
+
+void MainWindow::startProcessFile()
+{
+    // runButton->setIcon(QIcon(":download.png")); // setDefaultAction takes the icon from the action...
+    openAction->setEnabled(false);
+    statusLabel->setText("Processing...");
+    runButton->setIcon(QIcon(":hourglass.png"));
+    qDebug() << "started";
+}
+
+void MainWindow::finishProcessFile(int exitCode, QProcess::ExitStatus)
+{
+    openAction->setEnabled(true);
+    runButton->setIcon(QIcon(":download.png"));
+    if (exitCode == 0) {
+        statusLabel->setText("Pdf created.");
+        // qDebug() << "finished";
+    } else {
+        statusLabel->setText("Failed.");
+        // qDebug() << "failed";
+    }
+    // runButton->setIcon(QIcon(":download.png")); // setDefaultAction takes the icon from the action...
 }
 
 void MainWindow::preferences()
 {
     bool ok;
     QString path = QInputDialog::getText(this,
-		tr("Preferences"),
-		tr("Path to Ghostscript:"), QLineEdit::Normal,
-		ghostscriptPath,
-	&ok);
+        tr("Preferences"),
+        tr("Path to Ghostscript:"), QLineEdit::Normal,
+        ghostscriptPath,
+    &ok);
     if (ok && !path.isEmpty()) {
-		qDebug() << path;
-		ghostscriptPath = path;
-		saveSettings();
+        qDebug() << path;
+        ghostscriptPath = path;
+        saveSettings();
     }
 }
 
