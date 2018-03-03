@@ -50,7 +50,9 @@ MIT License.
 
 The ["download" button icon](https://openclipart.org/detail/218662/download-icon) is by [qubodup](https://openclipart.org/user-detail/qubodup).
 
-https://openclipart.org/detail/229880/hourglass
+The ["wait" button icon](https://openclipart.org/detail/229880/hourglass) is by [badaman](https://openclipart.org/user-detail/badaman).
+
+
 
 ## Development notes
 
