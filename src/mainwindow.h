@@ -39,8 +39,8 @@ private:
         "-dMonoImageResolution=1200",
         "-dColorImageResolution=300",
         "-sOutputFile=\"%1\"",
-        "-c .setpdfwrite"
-        "-sOutputFile=\"%2\""
+        "-c .setpdfwrite",
+        "-f \"%2\""
     };
 };
 #endif
