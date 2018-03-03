@@ -66,9 +66,17 @@ The ["download" button icon](https://openclipart.org/detail/218662/download-icon
   - https://cmake.org/cmake/help/v3.0/manual/cmake-qt.7.html
   - https://stackoverflow.com/questions/29468413/qt-resources-files-with-cmake-and-autorcc
 
+- For improving the optimiziation see
+  - The [PdfSizeopt](https://github.com/pts/pdfsizeopt) Python tool (Ghostscript + other optimizations; got a far worse compression on my files)
+  - [Hummus PDF](https://github.com/galkahana/PDF-Writer/) can [read and write Pdfs](https://github.com/galkahana/PDF-Writer/wiki/PDF-Parsing)
+  - or Poppler?
+  - As an exemple:
+    - catch duplicated images.
+
 ## Todo
 
 - Make sure that the ghostscript path is an executable.
 - Use a real dialog for the preferences, with a file picker.
 - Set the button to an hourglass while processing.
 - Add and check the install step. (The binary seems to work correctly even if moved to a random place)
+- 150 dpi for images could be enough (if we target home/office printers + screen)
