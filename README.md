@@ -80,6 +80,7 @@ The ["wait" button icon](https://openclipart.org/detail/229880/hourglass) is by 
 ## Todo
 
 - Make sure that the ghostscript path is an executable.
+- Setup a continous integration workflow that produces appimages and dmgs.
 - Use a real dialog for the preferences, with a file picker.
 - Add and check the install step. (The binary seems to work correctly even if moved to a random place)
 - 150 dpi for images could be enough (if we target home/office printers + screen)
