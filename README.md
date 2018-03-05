@@ -9,6 +9,8 @@ Drop a Pdf file or click on the button and let Ghostscript process it and shrink
 ```sh
 $ gs -dPDFSETTINGS=/prepress -dSAFER -dCompatibilityLevel=1.5 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sstdout=%stderr -dGrayImageResolution=600 -dMonoImageResolution=1200 -dColorImageResolution=300 -sOutputFile=output-file.pdf -c .setpdfwrite -f input-file.pdf
   ```
+Please do not use it to shrink PDFs that you will send to a print shop.  
+Only use it for PDFs that are sent by email or uploaded to a website (and will be read on screen or printed on home / office printers).
 
 ## Requirements
 
