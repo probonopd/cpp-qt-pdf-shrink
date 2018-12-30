@@ -12,7 +12,7 @@ install:
   - source /opt/qt*/bin/qt*-env.sh
 
 script:
-  - qmake CONFIG+=release PREFIX=/usr
+  - cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
   - make -j$(nproc)
   - mkdir -p appdir/usr/bin ; cp pdf-shrink appdir/usr/bin/
   - mkdir -p appdir/usr/share/applications ; cp *.desktop appdir/usr/share/applications/
