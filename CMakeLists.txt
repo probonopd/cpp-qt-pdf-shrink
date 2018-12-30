@@ -13,7 +13,6 @@ find_package(Qt5Widgets)
 
 ADD_EXECUTABLE(pdf-shrink
     src/main.cpp
-    src/pdfshrink.cpp
     src/mainwindow.cpp
     assets/resources.qrc
 )
